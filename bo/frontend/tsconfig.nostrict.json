@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // Temporarily disable strict type checking
+    "strict": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "strictFunctionTypes": false,
+    "strictBindCallApply": false,
+    "strictPropertyInitialization": false,
+    "noImplicitThis": false,
+    "alwaysStrict": false,
+    
+    // Additional options to make TypeScript more lenient
+    "suppressImplicitAnyIndexErrors": true,
+    "noStrictGenericChecks": true,
+    "useUnknownInCatchVariables": false,
+    
+    // Allow type assertions
+    "allowSyntheticDefaultImports": true,
+    
+    // Ignore errors in libraries
+    "skipLibCheck": true
+  }
+}

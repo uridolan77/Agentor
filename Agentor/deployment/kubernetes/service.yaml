@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: agentor
+  labels:
+    app: agentor
+spec:
+  selector:
+    app: agentor
+  ports:
+  - port: 80
+    targetPort: 8000
+    name: http
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: agentor-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - agentor.example.com
+    secretName: agentor-tls
+  rules:
+  - host: agentor.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: agentor
+            port:
+              name: http
